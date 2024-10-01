@@ -36,7 +36,9 @@ public class MemoController {
         // Map to List
         List<MemoResponseDto> responseList = memoList.values().stream()
                 .map(MemoResponseDto::new).toList();
-
+        //  MemoResponseDto::new 를 MemoResponseDto -> new MemoResponseDto() 로 바꿀 때 파라미터를 어떻게 해야함? MemoResponseDto
+        // MemoResponseDto::new 의 의미 : map 에서 꺼낸 값을 MemoResponseDto의 생성자에 넣겠다.
+        // 위와 같은 표현은 생성자 파라미터가 1개일때만 쓸 수 있음
         return responseList;
     }
 
