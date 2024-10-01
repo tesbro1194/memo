@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// entity : 데이터 베이스와 소통 담당
 @Getter
 @Setter
 @NoArgsConstructor

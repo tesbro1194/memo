@@ -11,26 +11,28 @@ import java.util.*;
 @RequestMapping("/api")
 public class MemoController {
 
+    // DB
     private final Map<Long, Memo> memoList = new HashMap<>();
 
+    // 메모 생성하기 , 클라이언트의 입력을 받아 메모로 응답함.
     @PostMapping("/memos")
     public MemoResponseDto createMemo (@RequestBody MemoRequestDto requestDto) {
-        // RequestDto -> Entity
+        // RequestDto -> Entity , requestDto 에서 이름과 내용을 받아 Memo 로 넘김.
         Memo memo = new Memo(requestDto);
 
-        // Memo Max ID check
+        // Memo 에 id 부여
         Long maxId = memoList.size() > 0 ? Collections.max(memoList.keySet()) + 1 : 1;
         memo.setId(maxId);
 
-        // DB 저장
+        // DB에 저장
         memoList.put(memo.getId(), memo);
 
         // Entity -> ResponseDto
         MemoResponseDto memoResponseDto = new MemoResponseDto(memo);
-
         return memoResponseDto;
     }
 
+    // 메모 조회하기
     @GetMapping("/memos")
     public List<MemoResponseDto> getMemos () {
         // Map to List
@@ -41,6 +43,4 @@ public class MemoController {
         // 위와 같은 표현은 생성자 파라미터가 1개일때만 쓸 수 있음
         return responseList;
     }
-
-
 }
