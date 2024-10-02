@@ -18,6 +18,29 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class MemoController {
+/*
+    JDBC : Java Database Connectivity로 DB에 접근할 수 있도록 Java에서 제공하는 API
+    JDBC에 연결해야하는 DB의 JDBC 드라이버를 제공하면 DB 연결 로직을 변경할 필요없이 DB 변경이 가능함.
+    DB 회사들은 자신들의 DB에 맞도록 JDBC 인터페이스를 구현한 후 라이브러리로 제공하며 이를 JDBC 드라이버라고 함.
+    따라서 MySQL 드라이버를 사용해 DB에 연결을 하다 PostgreSQL 서버로 변경이 필요할 때 드라이버만 교체하면 손쉽게 DB 변경이 가능함.
+
+    JdbcTemplate : DB에 연결하기 위해 필요한 커넥션 연결, statement 준비 및 실행, 커넥션 종료 등의 반복적이고 중복되는 작업들을 처리함.
+    사용 방법 :
+    1. application.properties에 DB에 접근하기 위한 정보를 작성합니다.
+spring.datasource.url=jdbc:mysql://localhost:3306/memo
+spring.datasource.username=root
+spring.datasource.password={비밀번호}
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+    2. build.gradle에 JDBC 라이브러리와 MySQL을 등록합니다.
+implementation 'mysql:mysql-connector-java:8.0.28'
+implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+
+    3. DB연결이 필요한 곳에서 JdbcTemplate을 주입받아와 사용합니다.
+public MemoController(JdbcTemplate jdbcTemplate) {
+this.jdbcTemplate = jdbcTemplate;
+}
+*/
+
 
     private final JdbcTemplate jdbcTemplate;
 
