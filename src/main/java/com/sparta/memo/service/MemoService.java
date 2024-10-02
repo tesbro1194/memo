@@ -3,10 +3,17 @@ import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.entity.Memo;
 import com.sparta.memo.repository.MemoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+// bean 으로 등록하는 방법: 빈으로 등록하고자 하는 클래스에서 @Component
+@Service  // @Component 가 포함되어 있음
 public class MemoService {
     private final MemoRepository memoRepository;
+    // 생성자를 통한 의존성 주입
+    @Autowired  // @Autowired: 빈 객체를 스프링에 주입, 생성자 하나일 때 생략 가능 ,
+                // bean 클래스만 가능, 즉 @Component 이 달려있어야만 사용 가능.
     public MemoService(MemoRepository memoRepository) {
         this.memoRepository = memoRepository;
     }

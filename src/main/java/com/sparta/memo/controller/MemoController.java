@@ -5,6 +5,8 @@ import com.sparta.memo.service.MemoService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+ /*  IoC Container , Bean:
+ Bean 은 스프링이 관리하는 객체, 그러한 객체들이 모여 있는 Container */
 @RestController
 @RequestMapping("/api")
 public class MemoController {
