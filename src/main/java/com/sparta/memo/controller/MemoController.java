@@ -1,8 +1,10 @@
 package com.sparta.memo.controller;
+
 import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.service.MemoService;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
  /*  IoC Container , Bean:
@@ -16,7 +18,6 @@ public class MemoController {
     }
     @PostMapping("/memos")
     public MemoResponseDto createMemo(@RequestBody MemoRequestDto requestDto) {
-
         return memoService.createMemo(requestDto);
     }
     @GetMapping("/memos")

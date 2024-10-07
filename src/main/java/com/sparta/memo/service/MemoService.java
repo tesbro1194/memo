@@ -1,10 +1,12 @@
 package com.sparta.memo.service;
+
 import com.sparta.memo.dto.MemoRequestDto;
 import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.entity.Memo;
 import com.sparta.memo.repository.MemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 // bean 으로 등록하는 방법: 빈으로 등록하고자 하는 클래스에서 @Component
