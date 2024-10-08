@@ -7,6 +7,7 @@ import com.sparta.memo.repository.MemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -34,6 +35,11 @@ public class MemoService {
                 .map(MemoResponseDto::new).toList();
 
     }
+    public List<MemoResponseDto> getMemosByKeyword(@RequestParam String keyword) {
+        return memoRepository.findAllByContentsContainsOrderByModifiedAtDesc(keyword).stream()
+                .map( memo -> new MemoResponseDto(memo))
+                .toList();
+    }
     @Transactional  //jpa에는 변경 감지(Dirty Checking) 기능이 있음. Transactional 에노테이션이 활성화함.
     // 위 에노테이션이 걸린 메서드는 수행된 다음 commit이 이루어짐. 즉 변경 사항(C, U, D) 저장.
     public Long updateMemo(Long id, MemoRequestDto requestDto) {
@@ -43,7 +49,6 @@ public class MemoService {
         memo.update(requestDto);
         return id;
     }
-
     public Long deleteMemo(Long id) {
         // 해당 메모가 DB에 존재하는지 확인
         Memo memo = findMemo(id);

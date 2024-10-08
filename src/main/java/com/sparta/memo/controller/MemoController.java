@@ -24,11 +24,15 @@ public class MemoController {
     public List<MemoResponseDto> getMemos() {
         return memoService.getMemos();
     }
-    @PutMapping("/memos/{id}")
+     @GetMapping("/memos/contexts")
+     public List<MemoResponseDto> getMemosByKeyword (@RequestParam String keyword) {
+         return memoService.getMemosByKeyword(keyword);
+     }
+     @PutMapping("/memos/{id}")
     public Long updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto) {
         return memoService.updateMemo(id, requestDto);
     }
-    @DeleteMapping("/memos/{id}")
+     @DeleteMapping("/memos/{id}")
     public Long deleteMemo(@PathVariable Long id) {
         return memoService.deleteMemo(id);
     }
