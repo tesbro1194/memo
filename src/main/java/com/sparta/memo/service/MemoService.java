@@ -6,16 +6,13 @@ import com.sparta.memo.entity.Memo;
 import com.sparta.memo.repository.MemoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-// bean 으로 등록하는 방법: 빈으로 등록하고자 하는 클래스에서 @Component
-@Service  // @Component 가 포함되어 있음
+@Service
 public class MemoService {
     private final MemoRepository memoRepository;
-    // 생성자를 통한 의존성 주입
-    @Autowired  // @Autowired: 빈 객체를 스프링에 주입, 생성자 하나일 때 생략 가능 ,
-                // bean 클래스만 가능, 즉 @Component 이 달려있어야만 사용 가능.
     public MemoService(MemoRepository memoRepository) {
         this.memoRepository = memoRepository;
     }
@@ -33,30 +30,31 @@ public class MemoService {
     }
     public List<MemoResponseDto> getMemos() {
         // DB 조회
-        return memoRepository.findAll();
+        return memoRepository.findAll().stream()
+                .map(MemoResponseDto::new).toList();
 
     }
+    @Transactional  //jpa에는 변경 감지(Dirty Checking) 기능이 있음. Transactional 에노테이션이 활성화함.
+    // 위 에노테이션이 걸린 메서드는 수행된 다음 commit이 이루어짐. 즉 변경 사항(C, U, D) 저장.
     public Long updateMemo(Long id, MemoRequestDto requestDto) {
-
         // 해당 메모가 DB에 존재하는지 확인
-        Memo memo = memoRepository.findById(id);
-        if(memo != null) {
-            // memo 내용 수정
-            memoRepository.update(id, requestDto);
-            return id;
-        } else {
-            throw new IllegalArgumentException("선택한 메모는 존재하지 않습니다.");
-        }
+        Memo memo = findMemo(id);
+        // memo 수정
+        memo.update(requestDto);
+        return id;
     }
+
     public Long deleteMemo(Long id) {
         // 해당 메모가 DB에 존재하는지 확인
-        Memo memo = memoRepository.findById(id);
-        if(memo != null) {
-            // memo 삭제
-            memoRepository.delete(id);
-            return id;
-        } else {
-            throw new IllegalArgumentException("선택한 메모는 존재하지 않습니다.");
-        }
+        Memo memo = findMemo(id);
+
+        memoRepository.delete(memo);
+        return id;
+
+    }
+    private Memo findMemo(Long id) {
+        // Optional은 null check를 해야함 -> orElseThrow() : 예외 처리
+        return memoRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("선택한 메모는 존재하지 않습니다."));
     }
 }
